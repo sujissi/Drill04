@@ -47,6 +47,11 @@ def handle_events():
     if dir_x == 0 and dir_y == 0 :
         dir_img = 3
 
+def is_collision(x, y):
+    if x < 40 or x > TUK_WIDTH - 40 or y < 40 or y > TUK_HEIGHT - 40:
+        return True
+
+
 while running:
     clear_canvas()
     tuk_ground.draw(TUK_WIDTH//2,TUK_HEIGHT//2)
@@ -54,9 +59,11 @@ while running:
     update_canvas()
     handle_events()
     frame = (frame + 1) % 3
-    if not is_collision(x,y):
-        x += dir_x * 10
-        y += dir_y * 10
+    x += dir_x * 10
+    y += dir_y * 10
+    if is_collision(x, y):
+        x -= dir_x * 10
+        y -= dir_y * 10
     delay(0.05)
 
 close_canvas()

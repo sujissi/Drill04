@@ -18,33 +18,23 @@ def handle_events():
     global running, dir_x, dir_y, dir_img
     events = get_events()
     for event in events:
-        if event.type == SDL_QUIT:
+        if event.type == SDL_QUIT or event.key == SDLK_ESCAPE:
             running = False
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_RIGHT:
-                dir_x += 1
-                dir_img = 1
+                dir_x, dir_img = 1, 1
             elif event.key == SDLK_LEFT:
-                dir_x -= 1
-                dir_img = 2
+                dir_x, dir_img = -1, 2
             elif event.key == SDLK_UP:
-                dir_y += 1
-                dir_img = 0
+                dir_y, dir_img = 1, 0
             elif event.key == SDLK_DOWN:
-                dir_y -= 1
-                dir_img = 3
-            elif event.key == SDLK_ESCAPE:
-                running = False
+                dir_y, dir_img = -1, 3
         elif event.type == SDL_KEYUP:
-            if event.key == SDLK_RIGHT:
-                dir_x -= 1
-            elif event.key == SDLK_LEFT:
-                dir_x += 1
-            elif event.key == SDLK_UP:
-                dir_y -= 1
-            elif event.key == SDLK_DOWN:
-                dir_y += 1
-    if dir_x == 0 and dir_y == 0 :
+            if event.key == SDLK_RIGHT or event.key == SDLK_LEFT:
+                dir_x = 0
+            elif event.key == SDLK_UP or event.key == SDLK_DOWN:
+                dir_y = 0
+    if dir_x == 0 and dir_y == 0:
         dir_img = 3
 
 def is_collision(x, y):
